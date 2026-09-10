@@ -1,0 +1,37 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+const { title } = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <ViewTransitions />
+    
+    <!-- Script para evitar el destello blanco al recargar en modo oscuro -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+      window.localStorage.setItem('theme', theme);
+    </script>
+  </head>
+  <!-- Aquí usamos los colores elegantes: crema suave de día, gris muy oscuro de noche -->
+  <body class="bg-[#fdfbf7] text-gray-800 dark:bg-[#1a1918] dark:text-gray-200 transition-colors duration-500 min-h-screen font-serif">
+    <slot />
+  </body>
+</html>
