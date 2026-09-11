@@ -1,8 +1,8 @@
 @import "tailwindcss";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* --- Animaciones Personalizadas --- */
-
+/* Animaciones Personalizadas */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -25,7 +25,6 @@
   }
 }
 
-/* Clases de utilidad para aplicar las animaciones */
 .animate-fade-in-up {
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
