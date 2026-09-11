@@ -7,9 +7,13 @@ const base = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL 
   : `${import.meta.env.BASE_URL}/`;
 
-// Rutas de las imágenes adaptadas para GitHub Pages
+// Lista de las 5 páginas del manga organizadas
 const paginas = [
   `${base}pagina1.jpg`,
+  `${base}pagina2.jpg`,
+  `${base}pagina3.jpg`,
+  `${base}pagina4.jpg`,
+  `${base}pagina5.jpg`,
 ];
 ---
 
@@ -25,15 +29,15 @@ const paginas = [
     </div>
   </nav>
 
-  <!-- Contenedor del Manga -->
+  <!-- Contenedor del Manga en formato cascada vertical -->
   <main class="w-full max-w-2xl mx-auto flex flex-col items-center justify-center min-h-screen relative z-10 pt-8 pb-20 px-4 md:px-0">
     
-    <div class="w-full shadow-2xl animate-fade-in-up bg-white/50 dark:bg-black/50 overflow-hidden rounded-md border border-white/20 dark:border-white/5">
+    <div class="w-full shadow-2xl animate-fade-in-up bg-white/50 dark:bg-black/50 overflow-hidden rounded-md border border-white/20 dark:border-white/5 flex flex-col">
       {paginas.map((pagina) => (
         <img 
           src={pagina} 
           alt="Página del manga" 
-          class="w-full h-auto object-contain block"
+          class="w-full h-auto object-contain block m-0 p-0"
           loading="lazy" 
         />
       ))}
