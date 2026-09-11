@@ -2,8 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import BotonTema from '../components/BotonTema.astro';
 
-// Obtenemos la ruta base correcta para GitHub Pages
-const base = import.meta.env.BASE_URL;
+// Nos aseguramos de que el base termine siempre con una barra diagonal '/'
+const base = import.meta.env.BASE_URL.endsWith('/') 
+  ? import.meta.env.BASE_URL 
+  : `${import.meta.env.BASE_URL}/`;
 ---
 
 <Layout title="¡Feliz Cumpleaños!">
@@ -28,16 +30,16 @@ const base = import.meta.env.BASE_URL;
       </p>
     </div>
     
-    <!-- Botones con enlaces corregidos usando la variable base -->
+    <!-- Botones con rutas absolutas limpias para GitHub Pages -->
     <div class="animate-fade-in-up [animation-delay:400ms]">
       <div class="flex flex-wrap justify-center gap-4 mt-8">
-        <a href={`${base}carta`} class="px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium inline-block">
+        <a href={`${base}carta/`} class="px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium inline-block">
           Leer Carta
         </a>
-        <a href={`${base}manga`} class="px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium inline-block">
+        <a href={`${base}manga/`} class="px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium inline-block">
           Ver Manga
         </a>
-        <a href={`${base}musica`} class="px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium inline-block">
+        <a href={`${base}musica/`} class="px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium inline-block">
           Música
         </a>
       </div>
