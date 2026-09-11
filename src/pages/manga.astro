@@ -1,34 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BotonTema from '../components/BotonTema.astro';
 
-// Aquí configuras las imágenes de tu manga.
-// Como están en la carpeta "public", solo necesitas poner la barra "/" y el nombre del archivo.
+// Aquí configuras las imágenes de tu manga (deben estar en la carpeta public)
 const paginas = [
   '/pagina1.jpg',
   '/pagina2.jpg',
-  '/pagina3.jpg',
-  // Puedes agregar tantas como necesites, separadas por comas.
 ];
 ---
 
 <Layout title="Capítulo Especial">
-  <!-- Barra superior pegajosa con efecto cristal -->
-  <nav class="sticky top-0 w-full bg-[#fdfbf7]/80 dark:bg-[#1a1918]/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800">
+  <!-- Barra superior pegajosa con botón de tema integrado -->
+  <nav class="sticky top-0 w-full bg-white/70 dark:bg-[#0a0908]/80 backdrop-blur-md z-50 border-b border-violet-100 dark:border-white/10 animate-fade-in-down transition-colors duration-500">
     <div class="max-w-3xl mx-auto p-4 flex justify-between items-center">
-      <a href="/" class="text-sm opacity-60 hover:opacity-100 transition-opacity flex items-center gap-2">
-        <span>← Volver</span>
+      <a href="/" class="text-sm font-medium opacity-70 hover:opacity-100 hover:text-violet-700 dark:hover:text-amber-400 transition-all flex items-center gap-2">
+        ← Volver
       </a>
-      <h1 class="font-bold italic text-lg">Capítulo Único</h1>
-      <!-- Este div vacío ayuda a centrar el título perfectamente -->
-      <div class="w-16"></div> 
+      <h1 class="font-bold italic text-lg text-violet-950 dark:text-amber-100 tracking-wider">Capítulo Único</h1>
+      <BotonTema />
     </div>
   </nav>
 
   <!-- Contenedor del Manga -->
-  <main class="max-w-2xl mx-auto flex flex-col items-center justify-center min-h-screen bg-black/5 dark:bg-black/20">
+  <main class="w-full max-w-2xl mx-auto flex flex-col items-center justify-center min-h-screen relative z-10 pt-8 pb-20 px-4 md:px-0">
     
-    <!-- Bucle que imprime todas las imágenes automáticamente -->
-    <div class="w-full shadow-2xl">
+    <div class="w-full shadow-2xl animate-fade-in-up bg-white/50 dark:bg-black/50 overflow-hidden rounded-md border border-white/20 dark:border-white/5">
       {paginas.map((pagina) => (
         <img 
           src={pagina} 
@@ -39,12 +35,12 @@ const paginas = [
       ))}
     </div>
 
-    <!-- Mensaje y botón al finalizar la lectura -->
-    <div class="my-20 text-center flex flex-col items-center gap-6 px-4">
-      <p class="text-2xl italic font-semibold opacity-90">Continuará...</p>
-      <p class="text-lg opacity-70 max-w-md">Espero que te haya gustado esta sorpresa. Aún hay más por descubrir.</p>
+    <!-- Mensaje y botón al finalizar -->
+    <div class="mt-20 text-center flex flex-col items-center gap-6 animate-fade-in-up [animation-delay:300ms]">
+      <p class="text-3xl italic font-bold text-violet-900 dark:text-amber-400">Continuará...</p>
+      <p class="text-lg opacity-80 max-w-md">Espero que te haya gustado esta sorpresa. Aún hay más por descubrir.</p>
       
-      <a href="/carta" class="mt-4 px-8 py-4 bg-gray-800 text-[#fdfbf7] dark:bg-gray-200 dark:text-[#1a1918] rounded-full hover:scale-105 transition-transform duration-300 font-bold shadow-lg">
+      <a href="/carta" class="mt-4 px-8 py-3 rounded-full border border-violet-200 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur-md hover:bg-violet-50 dark:hover:bg-white/10 hover:border-violet-300 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(139,92,246,0.15)] dark:hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium text-violet-950 dark:text-white">
         Leer la carta especial
       </a>
     </div>

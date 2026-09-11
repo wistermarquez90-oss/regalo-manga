@@ -1,10 +1,52 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BotonTema from '../components/BotonTema.astro';
 ---
+
 <Layout title="Mi Carta para ti">
-  <main class="max-w-2xl mx-auto p-8 mt-10">
-    <a href="/" class="opacity-60 hover:opacity-100 transition-opacity">← Volver al inicio</a>
-    <h1 class="text-4xl font-bold mt-8 mb-6">Una carta especial...</h1>
-    <p class="text-lg leading-relaxed opacity-90">Aquí puedes escribir todo tu mensaje. Como usamos View Transitions, verás que llegar a esta página se sintió súper fluido.</p>
+  
+  <!-- Navegación superior -->
+  <nav class="flex justify-between items-center p-6 max-w-3xl mx-auto relative z-20 animate-fade-in-down w-full">
+    <a href="/" class="text-sm font-medium opacity-70 hover:opacity-100 hover:text-violet-700 dark:hover:text-amber-400 transition-all flex items-center gap-2">
+      ← Volver al inicio
+    </a>
+    <BotonTema />
+  </nav>
+
+  <!-- Contenedor de la carta -->
+  <main class="w-full max-w-3xl mx-auto p-6 relative z-10 flex-1 flex flex-col justify-center">
+    
+    <div class="bg-white/60 dark:bg-black/40 backdrop-blur-md p-8 md:p-14 rounded-3xl border border-violet-100 dark:border-white/10 shadow-2xl animate-fade-in-up">
+      
+      <h1 class="text-4xl md:text-5xl font-bold mb-10 text-violet-900 dark:text-amber-400 tracking-tight transition-colors">
+        Para la persona más especial...
+      </h1>
+      
+      <!-- Cuerpo del texto -->
+      <div class="space-y-6 text-lg md:text-xl leading-relaxed opacity-90 text-gray-800 dark:text-gray-200">
+        <p>
+          ¡Feliz Cumpleaños, mi amor! 💖
+        </p>
+        <p>
+          Hoy celebro tu vida y doy gracias por tenerte a mi lado. Ver tu sonrisa en medio de la rutina universitaria hace que cada día sea especial. Me encanta compartir estos momentos contigo: caminar juntos, soñar juntos y construir nuestros propios recuerdos.
+        </p>
+        <p>
+          Eres mi persona favorita, mi mayor apoyo y mi mejor cómplice de aventuras. ¡Que este nuevo año de vida te traiga toda la felicidad que te mereces, muchos éxitos y, por supuesto, muchos más momentos increíbles juntos!
+        </p>
+        <p>
+          Te quiero con todo mi corazón, hoy y siempre. ¡Vamos a celebrar en grande! 🎉✨
+        </p>
+      </div>
+      
+      <!-- Firma -->
+      <div class="mt-12 text-right">
+        <p class="font-bold italic text-violet-800 dark:text-amber-300 text-2xl transition-colors">
+          Atentamente, <br/>
+          tu amorcito
+        </p>
+      </div>
+      
+    </div>
+    
   </main>
 </Layout>
