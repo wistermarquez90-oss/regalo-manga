@@ -7,7 +7,7 @@ const base = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL 
   : `${import.meta.env.BASE_URL}/`;
 
-// Lista de las 7 canciones con sus IDs de YouTube y sus letras románticas/emblemáticas
+// Lista de las 7 canciones con sus IDs de YouTube y sus letras
 const canciones = [
   {
     id: 'ac3HkriqdGQ',
@@ -115,7 +115,7 @@ const canciones = [
     titulo: 'Electricity',
     artista: 'Silk City, Dua Lipa',
     letra: [
-      "Falling,, I am falling",
+      "Falling, I am falling",
       "Keep on calling, calling",
       "And oooh, I touch you once, I touch you twice",
       "I call your name twice, but it's no use",
@@ -144,7 +144,6 @@ const canciones = [
   <!-- Contenido Principal -->
   <main class="w-full max-w-4xl mx-auto p-6 relative z-10 flex flex-col gap-8 pb-20">
     
-    <!-- Título de sección -->
     <div class="text-center space-y-2 animate-fade-in-up">
       <h2 class="text-3xl md:text-5xl font-bold text-violet-900 dark:text-amber-400 tracking-tight">
         Nuestras Canciones
@@ -154,19 +153,18 @@ const canciones = [
       </p>
     </div>
 
-    <!-- Contenedor Principal en Grid (Lista a un lado, Reproductor y Letra al otro) -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
       
-      <!-- Lista de Canciones (Columna izquierda) -->
+      <!-- Lista de Canciones -->
       <div class="md:col-span-5 bg-white/40 dark:bg-black/30 backdrop-blur-md p-4 rounded-2xl border border-violet-100 dark:border-white/10 shadow-xl animate-fade-in-up flex flex-col gap-2">
         <h3 class="text-sm font-semibold uppercase tracking-wider px-3 py-2 text-violet-800 dark:text-amber-300">
           Lista de Reproducción
         </h3>
-        <div id="playlist-container" class="flex flex-col gap-2 max-h-[450px] overflow-y-auto pr-1">
+        <div class="flex flex-col gap-2 max-h-[450px] overflow-y-auto pr-1">
           {canciones.map((cancion, index) => (
             <button 
+              type="button"
               data-index={index}
-              data-id={cancion.id}
               class="song-btn text-left px-4 py-3 rounded-xl transition-all flex items-center justify-between group border border-transparent hover:border-violet-300 dark:hover:border-amber-500/30 hover:bg-violet-50/60 dark:hover:bg-white/10 cursor-pointer"
             >
               <div>
@@ -181,29 +179,26 @@ const canciones = [
         </div>
       </div>
 
-      <!-- Reproductor y Letra de la Canción (Columna derecha) -->
+      <!-- Reproductor y Letra -->
       <div class="md:col-span-7 bg-white/50 dark:bg-black/40 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-violet-100 dark:border-white/10 shadow-2xl animate-fade-in-up flex flex-col gap-6">
         
-        <!-- Info de la canción activa -->
         <div class="flex justify-between items-center border-b border-violet-100 dark:border-white/10 pb-4">
           <div>
             <span id="current-artist" class="text-xs font-semibold uppercase tracking-widest text-violet-600 dark:text-amber-400">Selecciona una canción</span>
             <h3 id="current-title" class="text-2xl font-bold text-violet-950 dark:text-white mt-1">Elige abajo</h3>
           </div>
-          <button id="play-pause-btn" class="px-5 py-2.5 rounded-full bg-violet-600 hover:bg-violet-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white font-medium shadow-lg transition-all hover:scale-105 cursor-pointer text-sm">
+          <button id="play-pause-btn" type="button" class="px-5 py-2.5 rounded-full bg-violet-600 hover:bg-violet-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white font-medium shadow-lg transition-all hover:scale-105 cursor-pointer text-sm">
             Reproducir / Pausa
           </button>
         </div>
 
-        <!-- Reproductor de YouTube Oculto (Maneja el audio real) -->
         <div class="hidden">
           <div id="youtube-player"></div>
         </div>
 
-        <!-- Visor de Letra de la Canción -->
         <div class="bg-white/60 dark:bg-black/40 p-6 rounded-2xl border border-violet-50 dark:border-white/5 shadow-inner min-h-[220px] max-h-[300px] overflow-y-auto flex flex-col justify-center text-center">
           <div id="lyrics-display" class="space-y-3 text-lg md:text-xl italic font-light opacity-90 leading-relaxed text-gray-800 dark:text-gray-200">
-            <p class="opacity-60 not-italic text-sm">La letra aparecerá aquí al reproducir una canción...</p>
+            <p class="opacity-60 not-italic text-sm">La letra aparecerá aquí al seleccionar una canción...</p>
           </div>
         </div>
 
@@ -213,19 +208,35 @@ const canciones = [
 
   </main>
 
-  <!-- Script Interactivo de Música y Letras con YouTube API -->
+  <!-- Script Adaptado para Transiciones de Astro -->
   <script is:inline define:vars={{ canciones }}>
-    let player;
+    let player = null;
     let currentSongIndex = 0;
-    let isPlaying = false;
 
-    // Cargar API de YouTube
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    function initMusicPage() {
+      // Si la API de YouTube ya está cargada, inicializamos el reproductor directamente
+      if (window.YT && window.YT.Player) {
+        createPlayer();
+      } else {
+        // Si no, cargamos el script de la API
+        if (!document.getElementById('youtube-api-script')) {
+          const tag = document.createElement('script');
+          tag.id = 'youtube-api-script';
+          tag.src = "https://www.youtube.com/iframe_api";
+          const firstScriptTag = document.getElementsByTagName('script')[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+        window.onYouTubeIframeAPIReady = createPlayer;
+      }
+    }
 
-    window.onYouTubeIframeAPIReady = function() {
+    function createPlayer() {
+      const playerDiv = document.getElementById('youtube-player');
+      if (!playerDiv) return;
+
+      // Limpiar contenedor previo si existe
+      playerDiv.innerHTML = '';
+
       player = new YT.Player('youtube-player', {
         height: '0',
         width: '0',
@@ -236,26 +247,36 @@ const canciones = [
         },
         events: {
           'onReady': () => {
-            initPlaylistControls();
+            setupUI();
           },
           'onStateChange': onPlayerStateChange
         }
       });
     }
 
-    function initPlaylistControls() {
+    function setupUI() {
       const buttons = document.querySelectorAll('.song-btn');
       const playPauseBtn = document.getElementById('play-pause-btn');
 
       buttons.forEach((btn) => {
+        // Evitar duplicar listeners clonando el nodo o validando
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+      });
+
+      // Volver a asignar eventos a los botones limpios
+      document.querySelectorAll('.song-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
           const index = parseInt(btn.getAttribute('data-index'));
-          loadSong(index);
+          loadSong(index, true);
         });
       });
 
-      playPauseBtn?.addEventListener('click', () => {
-        if (!player) return;
+      const newPlayBtn = playPauseBtn.cloneNode(true);
+      playPauseBtn.parentNode.replaceChild(newPlayBtn, playPauseBtn);
+
+      document.getElementById('play-pause-btn')?.addEventListener('click', () => {
+        if (!player || typeof player.getPlayerState !== 'function') return;
         const state = player.getPlayerState();
         if (state === YT.PlayerState.PLAYING) {
           player.pauseVideo();
@@ -264,7 +285,7 @@ const canciones = [
         }
       });
 
-      // Cargar la primera por defecto (sin play automático para respetar restricciones del navegador)
+      // Cargar la primera canción visualmente sin reproducir de golpe
       loadSong(0, false);
     }
 
@@ -272,15 +293,12 @@ const canciones = [
       currentSongIndex = index;
       const song = canciones[index];
 
-      // Actualizar textos en pantalla
       document.getElementById('current-title').textContent = song.titulo;
       document.getElementById('current-artist').textContent = song.artista;
 
-      // Actualizar Letra
       const lyricsContainer = document.getElementById('lyrics-display');
       lyricsContainer.innerHTML = song.letra.map(line => `<p>${line}</p>`).join('');
 
-      // Resaltar botón activo en la lista
       document.querySelectorAll('.song-btn').forEach((b, i) => {
         if (i === index) {
           b.classList.add('bg-violet-100', 'dark:bg-white/20', 'border-violet-300', 'dark:border-amber-500/40');
@@ -289,7 +307,7 @@ const canciones = [
         }
       });
 
-      if (player && player.loadVideoById) {
+      if (player && typeof player.loadVideoById === 'function') {
         player.loadVideoById(song.id);
         if (!autoPlay) {
           player.pauseVideo();
@@ -300,17 +318,17 @@ const canciones = [
     function onPlayerStateChange(event) {
       const playPauseBtn = document.getElementById('play-pause-btn');
       if (event.data === YT.PlayerState.PLAYING) {
-        isPlaying = true;
         if (playPauseBtn) playPauseBtn.textContent = 'Pausar ⏸';
       } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-        isPlaying = false;
         if (playPauseBtn) playPauseBtn.textContent = 'Reproducir ▶';
         
-        // Si la canción termina, repetir en bucle automáticamente
         if (event.data === YT.PlayerState.ENDED) {
-          player.playVideo();
+          player.playVideo(); // Bucle automático al terminar la canción
         }
       }
     }
+
+    // Se ejecuta al cargar inicialmente y en cada transición de página de Astro
+    document.addEventListener('astro:page-load', initMusicPage);
   </script>
 </Layout>
