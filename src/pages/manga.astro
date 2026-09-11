@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Aquí configuras las imágenes de tu manga.
+// Como están en la carpeta "public", solo necesitas poner la barra "/" y el nombre del archivo.
+const paginas = [
+  '/pagina1.jpg',
+  '/pagina2.jpg',
+  '/pagina3.jpg',
+  // Puedes agregar tantas como necesites, separadas por comas.
+];
+---
+
+<Layout title="Capítulo Especial">
+  <!-- Barra superior pegajosa con efecto cristal -->
+  <nav class="sticky top-0 w-full bg-[#fdfbf7]/80 dark:bg-[#1a1918]/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto p-4 flex justify-between items-center">
+      <a href="/" class="text-sm opacity-60 hover:opacity-100 transition-opacity flex items-center gap-2">
+        <span>← Volver</span>
+      </a>
+      <h1 class="font-bold italic text-lg">Capítulo Único</h1>
+      <!-- Este div vacío ayuda a centrar el título perfectamente -->
+      <div class="w-16"></div> 
+    </div>
+  </nav>
+
+  <!-- Contenedor del Manga -->
+  <main class="max-w-2xl mx-auto flex flex-col items-center justify-center min-h-screen bg-black/5 dark:bg-black/20">
+    
+    <!-- Bucle que imprime todas las imágenes automáticamente -->
+    <div class="w-full shadow-2xl">
+      {paginas.map((pagina) => (
+        <img 
+          src={pagina} 
+          alt="Página del manga" 
+          class="w-full h-auto object-contain block"
+          loading="lazy" 
+        />
+      ))}
+    </div>
+
+    <!-- Mensaje y botón al finalizar la lectura -->
+    <div class="my-20 text-center flex flex-col items-center gap-6 px-4">
+      <p class="text-2xl italic font-semibold opacity-90">Continuará...</p>
+      <p class="text-lg opacity-70 max-w-md">Espero que te haya gustado esta sorpresa. Aún hay más por descubrir.</p>
+      
+      <a href="/carta" class="mt-4 px-8 py-4 bg-gray-800 text-[#fdfbf7] dark:bg-gray-200 dark:text-[#1a1918] rounded-full hover:scale-105 transition-transform duration-300 font-bold shadow-lg">
+        Leer la carta especial
+      </a>
+    </div>
+  </main>
+</Layout>

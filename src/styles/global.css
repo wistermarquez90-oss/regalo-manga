@@ -1,4 +1,37 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* Esta línea le dice a Tailwind que usaremos nuestro botón para el modo oscuro */
-@variant dark (&:is(.dark *));
+/* --- Animaciones Personalizadas --- */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Clases de utilidad para aplicar las animaciones */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0; /* Empieza invisible hasta que la animación corra */
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}

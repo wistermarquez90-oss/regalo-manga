@@ -2,20 +2,39 @@
 import Layout from '../layouts/Layout.astro';
 import BotonTema from '../components/BotonTema.astro';
 ---
+
 <Layout title="¡Feliz Cumpleaños!">
-  <nav class="flex justify-between items-center p-6 max-w-4xl mx-auto">
-    <h1 class="text-2xl font-bold italic">Para Ti</h1>
+  <nav class="flex justify-between items-center p-6 max-w-4xl mx-auto relative z-10 animate-fade-in-down">
+    <h1 class="text-2xl font-bold italic tracking-wider">Para Ti</h1>
     <BotonTema />
   </nav>
 
-  <main class="max-w-4xl mx-auto p-6 flex flex-col items-center justify-center min-h-[70vh] text-center gap-8">
-    <h2 class="text-5xl md:text-7xl font-bold tracking-tight">Feliz Cumpleaños</h2>
-    <p class="text-lg opacity-80 max-w-md">He preparado algo muy especial. Elige por dónde quieres empezar.</p>
+  <main class="max-w-4xl mx-auto p-6 flex flex-col items-center justify-center min-h-[75vh] text-center gap-10 relative z-10">
     
-    <div class="flex gap-4 mt-4">
-      <a href="/carta" class="px-6 py-3 border border-gray-800 dark:border-gray-200 rounded-full hover:bg-gray-800 hover:text-[#fdfbf7] dark:hover:bg-gray-200 dark:hover:text-[#1a1918] transition-colors">Leer Carta</a>
-      <a href="/manga" class="px-6 py-3 border border-gray-800 dark:border-gray-200 rounded-full hover:bg-gray-800 hover:text-[#fdfbf7] dark:hover:bg-gray-200 dark:hover:text-[#1a1918] transition-colors">Ver Manga</a>
-      <a href="/musica" class="px-6 py-3 border border-gray-800 dark:border-gray-200 rounded-full hover:bg-gray-800 hover:text-[#fdfbf7] dark:hover:bg-gray-200 dark:hover:text-[#1a1918] transition-colors">Música</a>
+    <div class="space-y-6">
+      <!-- Texto interactivo que brilla al pasar el ratón -->
+      <h2 class="text-6xl md:text-8xl font-bold tracking-tight animate-fade-in-up transition-all duration-500 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-amber-400 hover:via-yellow-200 hover:to-amber-500 hover:drop-shadow-[0_0_25px_rgba(251,191,36,0.5)] cursor-default">
+        Feliz Cumpleaños
+      </h2>
+      
+      <!-- Subtítulo con retraso en la animación -->
+      <p class="text-xl md:text-2xl opacity-80 max-w-lg mx-auto italic font-light animate-fade-in-up [animation-delay:200ms] transition-all duration-300 hover:opacity-100 hover:text-amber-600 dark:hover:text-amber-300 cursor-default">
+        He preparado algo muy especial. Elige por dónde quieres empezar.
+      </p>
     </div>
+    
+    <!-- Botones con animación en cascada -->
+    <div class="flex flex-wrap justify-center gap-4 mt-8">
+      <a href="/carta" class="animate-fade-in-up [animation-delay:400ms] px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium">
+        Leer Carta
+      </a>
+      <a href="/manga" class="animate-fade-in-up [animation-delay:500ms] px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium">
+        Ver Manga
+      </a>
+      <a href="/musica" class="animate-fade-in-up [animation-delay:600ms] px-8 py-3 rounded-full border border-gray-300/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md hover:bg-amber-50 dark:hover:bg-white/10 hover:border-amber-200 dark:hover:border-amber-500/30 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(251,191,36,0.15)] transition-all duration-300 shadow-sm text-lg font-medium">
+        Música
+      </a>
+    </div>
+
   </main>
 </Layout>
