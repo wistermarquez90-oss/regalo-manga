@@ -18,12 +18,22 @@ const paginas = [
 ---
 
 <Layout title="Capítulo Especial">
-  <!-- Reproductor de música en bucle de fondo -->
-  <audio id="background-audio" src="https://www.youtube.com/watch?v=Zrn3I_LM9xA" loop preload="auto"></audio>
+  
+  <!-- Reproductor de YouTube Invisible en Bucle (ID del video: Zrn3I_LM9xA) -->
+  <div id="youtube-audio-container" class="fixed -top-[9999px] -left-[9999px] opacity-0 pointer-events-none">
+    <iframe 
+      id="youtube-player"
+      width="200" 
+      height="200" 
+      src="https://www.youtube.com/embed/Zrn3I_LM9xA?enablejsapi=1&autoplay=1&loop=1&playlist=Zrn3I_LM9xA" 
+      title="Música de fondo" 
+      allow="autoplay">
+    </iframe>
+  </div>
 
-  <!-- Botón flotante de música (para controlar si se desea silenciar/reproducir) -->
-  <button id="music-toggle" class="fixed bottom-6 right-6 z-50 px-4 py-2 rounded-full border border-violet-200 dark:border-white/20 bg-white/70 dark:bg-black/60 backdrop-blur-md shadow-lg text-xs md:text-sm font-medium flex items-center gap-2 text-violet-950 dark:text-amber-200 hover:scale-105 transition-all">
-    <span id="music-icon">🎵</span> <span id="music-text">Música: Activada</span>
+  <!-- Botón flotante para indicar estado o interactuar si el navegador bloquea el autoplay -->
+  <button id="music-toggle" class="fixed bottom-6 right-6 z-50 px-4 py-2 rounded-full border border-violet-200 dark:border-white/20 bg-white/70 dark:bg-black/60 backdrop-blur-md shadow-lg text-xs md:text-sm font-medium flex items-center gap-2 text-violet-950 dark:text-amber-200 hover:scale-105 transition-all cursor-pointer">
+    <span id="music-icon">🎵</span> <span id="music-text">Música de fondo: Activa</span>
   </button>
 
   <!-- Barra superior pegajosa -->
@@ -62,32 +72,45 @@ const paginas = [
     </div>
   </main>
 
-  <!-- Script para la reproducción automática y el botón de control -->
-  <script>
-    document.addEventListener('astro:page-load', () => {
-      const audio = document.getElementById('background-audio') as HTMLAudioElement;
+  <!-- Script para la API de YouTube -->
+  <script is:inline>
+    // Carga la API de YouTube de forma asíncrona
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('youtube-player', {
+        events: {
+          'onReady': (event) => {
+            event.target.playVideo();
+          }
+        }
+      });
+    }
+
+    // Control del botón flotante de música
+    document.addEventListener('DOMContentLoaded', () => {
       const musicToggle = document.getElementById('music-toggle');
       const musicText = document.getElementById('music-text');
       const musicIcon = document.getElementById('music-icon');
-
-      if (audio) {
-        audio.volume = 0.5; // Volumen agradable al 50%
-        // Intentar reproducir automáticamente al entrar
-        audio.play().catch(() => {
-          // Si el navegador bloquea la reproducción automática, se activará al primer clic
-          if (musicText) musicText.textContent = 'Toca aquí para reproducir música';
-        });
-      }
+      let isPlaying = true;
 
       musicToggle?.addEventListener('click', () => {
-        if (audio.paused) {
-          audio.play();
-          if (musicText) musicText.textContent = 'Música: Activada';
-          if (musicIcon) musicIcon.textContent = '🎵';
-        } else {
-          audio.pause();
+        if (!player) return;
+        
+        if (isPlaying) {
+          player.pauseVideo();
           if (musicText) musicText.textContent = 'Música: Pausada';
           if (musicIcon) musicIcon.textContent = '🔇';
+          isPlaying = false;
+        } else {
+          player.playVideo();
+          if (musicText) musicText.textContent = 'Música de fondo: Activa';
+          if (musicIcon) musicIcon.textContent = '🎵';
+          isPlaying = true;
         }
       });
     });
