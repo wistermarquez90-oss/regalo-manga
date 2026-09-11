@@ -7,7 +7,7 @@ const base = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL 
   : `${import.meta.env.BASE_URL}/`;
 
-// Lista de las 5 páginas del manga organizadas
+// Lista de las 5 páginas del manga
 const paginas = [
   `${base}pagina1.jpg`,
   `${base}pagina2.jpg`,
@@ -18,6 +18,14 @@ const paginas = [
 ---
 
 <Layout title="Capítulo Especial">
+  <!-- Reproductor de música en bucle de fondo -->
+  <audio id="background-audio" src="https://www.youtube.com/watch?v=Zrn3I_LM9xA" loop preload="auto"></audio>
+
+  <!-- Botón flotante de música (para controlar si se desea silenciar/reproducir) -->
+  <button id="music-toggle" class="fixed bottom-6 right-6 z-50 px-4 py-2 rounded-full border border-violet-200 dark:border-white/20 bg-white/70 dark:bg-black/60 backdrop-blur-md shadow-lg text-xs md:text-sm font-medium flex items-center gap-2 text-violet-950 dark:text-amber-200 hover:scale-105 transition-all">
+    <span id="music-icon">🎵</span> <span id="music-text">Música: Activada</span>
+  </button>
+
   <!-- Barra superior pegajosa -->
   <nav class="sticky top-0 w-full bg-white/70 dark:bg-[#0a0908]/80 backdrop-blur-md z-50 border-b border-violet-100 dark:border-white/10 animate-fade-in-down transition-colors duration-500">
     <div class="max-w-3xl mx-auto p-4 flex justify-between items-center">
@@ -53,4 +61,35 @@ const paginas = [
       </a>
     </div>
   </main>
+
+  <!-- Script para la reproducción automática y el botón de control -->
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const audio = document.getElementById('background-audio') as HTMLAudioElement;
+      const musicToggle = document.getElementById('music-toggle');
+      const musicText = document.getElementById('music-text');
+      const musicIcon = document.getElementById('music-icon');
+
+      if (audio) {
+        audio.volume = 0.5; // Volumen agradable al 50%
+        // Intentar reproducir automáticamente al entrar
+        audio.play().catch(() => {
+          // Si el navegador bloquea la reproducción automática, se activará al primer clic
+          if (musicText) musicText.textContent = 'Toca aquí para reproducir música';
+        });
+      }
+
+      musicToggle?.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          if (musicText) musicText.textContent = 'Música: Activada';
+          if (musicIcon) musicIcon.textContent = '🎵';
+        } else {
+          audio.pause();
+          if (musicText) musicText.textContent = 'Música: Pausada';
+          if (musicIcon) musicIcon.textContent = '🔇';
+        }
+      });
+    });
+  </script>
 </Layout>
